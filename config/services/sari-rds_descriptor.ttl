@@ -48,21 +48,21 @@ PREFIX : <http://www.researchspace.org/resource/system/service/custom#>
     a spl:Argument ;
     rdfs:comment "Search term" ;
     spl:predicate :_query ;
-    spl:valueType xsd:string
+    spl:valueType xsd:string ;
     ephedra:inputJsonPath "q0.query"
   ] ;
     spin:constraint [
     a spl:Argument ;
     rdfs:comment "Type" ;
     spl:predicate :_type ;
-    spl:valueType xsd:string
+    spl:valueType xsd:string;
     ephedra:inputJsonPath "q0.type"
   ] ;
     spin:constraint [
     a spl:Argument ;
     rdfs:comment "Limit results " ;
     spl:predicate :_limit ;
-    spl:valueType xsd:string
+    spl:valueType xsd:string;
     ephedra:inputJsonPath "q0.limit"
   ] ;
 
