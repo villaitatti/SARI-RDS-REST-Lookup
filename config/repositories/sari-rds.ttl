@@ -21,6 +21,7 @@
         ephedra:name "Accept" ;
         ephedra:value "application/json"
       ] ;
-      ephedra:implementsService :sari-rds 
+      ephedra:inputFormat "JSON";
+      ephedra:implementsService :SariRDS 
     ]  
   ] .
