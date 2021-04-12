@@ -1,0 +1,20 @@
+<semantic-context repository='sari-rds'>
+<semantic-simple-search
+query='
+PREFIX rds: <http://www.researchspace.com/resource/assets/Ontologies/sari-rds#>
+
+SELECT * WHERE {
+	?subject
+    	rds:hasQueryString ?__token__;
+		rds:hasType <http://schema.swissartresearch.net/ontology/rds#Person> ;
+  		rds:hasLimit "1" ;
+    	rds:hasOutputName ?outputName;
+      	rds:hasOutputType ?outputType;
+      	rds:hasOutputId ?outputId;
+      	rds:hasOutputDescription ?outputDescription;
+}
+'
+template='<div style="color: blue;" title="{{resource.value}}">{{outputName.value}}</div><div>Type: {{outputType.value}}</div><div>Id: {{outputId.value}}</div><div>Description: {{outputDescription.value}}</div>'
+input-placeholder='Search for something e.g. "Paris"'
+></semantic-simple-search>
+</semantic-context>

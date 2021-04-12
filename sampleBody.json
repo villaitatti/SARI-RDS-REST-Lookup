@@ -1,7 +1,0 @@
-{
-    "q0":{
-       "query":"Paris",
-       "type":"http://schema.swissartresearch.net/ontology/rds#Person",
-       "limit":2
-    }
-}
