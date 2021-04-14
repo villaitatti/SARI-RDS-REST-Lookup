@@ -91,7 +91,7 @@ spin:column [
     rdfs:comment "results" ;
     spl:predicate :_outputType ;
     spl:valueType rdfs:Resource;
-    ephedra:jsonPath "$.type[*].id"
+    ephedra:jsonPath "$.type[0].id"
   ] ;
 
   spin:column [
