@@ -32,22 +32,22 @@ PREFIX : <http://www.researchspace.org/resource/system/repository#>
     ]
     [
       sp:subject :_results ;
-      sp:predicate rds:hasOutputType ;
+      sp:predicate rds:outputType ;
       sp:object :_outputType
     ]
     [
       sp:subject :_results ;
-      sp:predicate rds:hasOutputName ;
+      sp:predicate rds:outputName ;
       sp:object :_outputName
     ]
     [
       sp:subject :_results ;
-      sp:predicate rds:hasOutputId ;
+      sp:predicate rds:outputId ;
       sp:object :_outputId
     ]
     [
       sp:subject :_results ;
-      sp:predicate rds:hasOutputDescription ;
+      sp:predicate rds:outputDescription ;
       sp:object :_outputDescription
     ]
   );
