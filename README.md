@@ -105,30 +105,111 @@ For example, to query for Persons with the name Paris:
 The default lookup searches across all datasets. To limit a lookup to a specific dataset, a dedicated endpoint is used. All endpoints support the above queries.
 
 All: 
-https://rds-mph.swissartresearch.net/rest/reconciliation/default-lookup
+https://rds-qa.swissartresearch.net/rest/reconciliation/default-lookup
 
 ULAN: 
-https://rds-mph.swissartresearch.net/rest/reconciliation/ulan-lookup
+https://rds-qa.swissartresearch.net/rest/reconciliation/ulan-lookup
 
 Wikidata: 
-https://rds-mph.swissartresearch.net/rest/reconciliation/wikidata-lookup
+https://rds-qa.swissartresearch.net/rest/reconciliation/wikidata-lookup
 
 AAT:
-https://rds-mph.swissartresearch.net/rest/reconciliation/aat-lookup
+https://rds-qa.swissartresearch.net/rest/reconciliation/aat-lookup
 
 GND:
-https://rds-mph.swissartresearch.net/rest/reconciliation/entityfacts-lookup
+https://rds-qa.swissartresearch.net/rest/reconciliation/entityfacts-lookup
 
 Geonames:
-https://rds-mph.swissartresearch.net/rest/reconciliation/geonames-lookup
+https://rds-qa.swissartresearch.net/rest/reconciliation/geonames-lookup
 
 
 ## Sample query
 ```
-curl --location --request POST 'https://rds-mph.swissartresearch.net/rest/reconciliation/default-lookup' \
+curl --location --request POST 'https://rds-qa.swissartresearch.net/rest/reconciliation/default-lookup' \
 --header 'content-type: application/json' \
 --header 'accept: application/json' \
 --data-raw '{"q0":{"query":"Paris", "type": "http://schema.swissartresearch.net/ontology/rds#Person", "limit":20,"preferredLanguage":"en"}}'
 ```
 
+## Aggregated Lookup
+
+Several datasets may contain entries about the same entities. A separate endpoint offers an aggregate lookup, which groups together URIs that refer to the same entities. The endpoint tries to determine, which URIs across dataset refer to the same entities (via e.g. owl:sameAs links in the datasets) and will return them as a group.
+
+However, the W3C Reconciliation API does not support hierarchical data, but only allows endpoints to return a flat list. Groups are established through re-ordering of the results, causing "same" entities to appear under each other, and an additional `reference` property, which links the grouped entities to the 'main' one.
+
+In the example below, the query for "Leonora Carrington" returns three results that all refer to the same entity. The first one is considered the 'main' entity and does not have a `reference` property, while the latter two refer to the same one. The `reference` property can be used to establish groups. The mere absence of a `reference` property denotes the beginning of a new group and can therefore be used to visually separate a group in contexts where hierarchical display is not possible. For example, a line could be drawn above entries without a `reference` via css in order to visually discriminate groups of entitites.
+
+
+
+### Example
+
+Query:
+```bash
+curl --location --request POST 'https://rds-qa.swissartresearch.net/rest/reconciliation/aggregated-federated-lookup' \
+    --header 'content-type: application/json' \
+    --header 'accept: application/json' \
+    --data-raw '{"q0":{"query":"Leonora Carrington", "type": "http://schema.swissartresearch.net/ontology/rds#Person", "limit":20,"preferredLanguage":"en"}}'
+```
+
+Response:
+```json
+{
+  "q0": {
+    "result": [
+      {
+        "id": "http://vocab.getty.edu/ulan/500018196",
+        "name": "Carrington, Leonora",
+        "score": 0.8838834764831843,
+        "match": true,
+        "dataset": {
+          "id": "http://vocab.getty.edu/ulan/graph",
+          "name": "ulan"
+        },
+        "type": [
+          {
+            "id": "http://vocab.getty.edu/ontology#PersonConcept",
+            "name": "PersonConcept"
+          }
+        ]
+      },
+      {
+        "id": "http://www.wikidata.org/entity/Q233207",
+        "name": "Leonora Carrington",
+        "score": 0.91,
+        "match": true,
+        "dataset": {
+          "id": "http://www.wikidata.org",
+          "name": "wikidata"
+        },
+        "description": "Mexican artist, surrealist painter and novelist (1917-2011)",
+        "reference": "http://vocab.getty.edu/ulan/500018196",
+        "type": [
+          {
+            "id": "http://www.wikidata.org/entity/Q5",
+            "name": "human"
+          }
+        ]
+      },
+      {
+        "id": "https://d-nb.info/gnd/118519271",
+        "name": "Leonora Carrington",
+        "score": 0.8838834764831843,
+        "match": true,
+        "dataset": {
+          "id": "https://d-nb.info/gnd/entityfacts/graph",
+          "name": "entity-facts"
+        },
+        "description": "Künstlerin Mexikan. surrealist. Malerin u. Schriftstellerin brit. Herkunft; lebte seit 1942 in Mexiko Frankreich (1917 - 25. Mai 2011)\n",
+        "reference": "http://vocab.getty.edu/ulan/500018196",
+        "type": [
+          {
+            "id": "https://d-nb.info/standards/elementset/gnd#Person",
+            "name": "Person"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
 
