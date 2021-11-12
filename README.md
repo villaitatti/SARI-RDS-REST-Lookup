@@ -105,27 +105,27 @@ For example, to query for Persons with the name Paris:
 The default lookup searches across all datasets. To limit a lookup to a specific dataset, a dedicated endpoint is used. All endpoints support the above queries.
 
 All: 
-https://rds-qa.swissartresearch.net/rest/reconciliation/default-lookup
+https://rds.swissartresearch.net/rest/reconciliation/default-lookup
 
 ULAN: 
-https://rds-qa.swissartresearch.net/rest/reconciliation/ulan-lookup
+https://rds.swissartresearch.net/rest/reconciliation/ulan-lookup
 
 Wikidata: 
-https://rds-qa.swissartresearch.net/rest/reconciliation/wikidata-lookup
+https://rds.swissartresearch.net/rest/reconciliation/wikidata-lookup
 
 AAT:
-https://rds-qa.swissartresearch.net/rest/reconciliation/aat-lookup
+https://rds.swissartresearch.net/rest/reconciliation/aat-lookup
 
 GND:
-https://rds-qa.swissartresearch.net/rest/reconciliation/entityfacts-lookup
+https://rds.swissartresearch.net/rest/reconciliation/entityfacts-lookup
 
 Geonames:
-https://rds-qa.swissartresearch.net/rest/reconciliation/geonames-lookup
+https://rds.swissartresearch.net/rest/reconciliation/geonames-lookup
 
 
 ## Sample query
 ```
-curl --location --request POST 'https://rds-qa.swissartresearch.net/rest/reconciliation/default-lookup' \
+curl --location --request POST 'https://rds.swissartresearch.net/rest/reconciliation/default-lookup' \
 --header 'content-type: application/json' \
 --header 'accept: application/json' \
 --data-raw '{"q0":{"query":"Paris", "type": "http://schema.swissartresearch.net/ontology/rds#Person", "limit":20,"preferredLanguage":"en"}}'
@@ -145,7 +145,7 @@ In the example below, the query for "Leonora Carrington" returns three results t
 
 Query:
 ```bash
-curl --location --request POST 'https://rds-qa.swissartresearch.net/rest/reconciliation/aggregated-federated-lookup' \
+curl --location --request POST 'https://rds.swissartresearch.net/rest/reconciliation/aggregated-federated-lookup' \
     --header 'content-type: application/json' \
     --header 'accept: application/json' \
     --data-raw '{"q0":{"query":"Leonora Carrington", "type": "http://schema.swissartresearch.net/ontology/rds#Person", "limit":20,"preferredLanguage":"en"}}'
